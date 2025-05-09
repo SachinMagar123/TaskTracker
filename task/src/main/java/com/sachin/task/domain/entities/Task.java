@@ -38,12 +38,12 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tasklist_id")
-    private TaskList taskList ;
+    private TaskList tasklist ;
 
     public Task() {
     }
 
-    public Task(UUID id, String taskname, String description, LocalDateTime due_date, TaskStatus taskstatus, TaskPriority priority, LocalDateTime created, LocalDateTime updated, TaskList taskList) {
+    public Task(UUID id, String taskname, String description, LocalDateTime due_date, TaskStatus taskstatus, TaskPriority priority, LocalDateTime created, LocalDateTime updated, TaskList tasklist) {
         this.id = id;
         this.taskname = taskname;
         this.description = description;
@@ -52,15 +52,15 @@ public class Task {
         this.priority = priority;
         this.created = created;
         this.updated = updated;
-        this.taskList = taskList;
+        this.tasklist = tasklist;
     }
 
     public TaskList getTaskList() {
-        return taskList;
+        return tasklist;
     }
 
     public void setTaskList(TaskList taskList) {
-        this.taskList = taskList;
+        this.tasklist = taskList;
     }
 
     public UUID getId() {
@@ -132,12 +132,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(taskname, task.taskname) && Objects.equals(description, task.description) && Objects.equals(due_date, task.due_date) && taskstatus == task.taskstatus && priority == task.priority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated) && Objects.equals(taskList, task.taskList);
+        return Objects.equals(id, task.id) && Objects.equals(taskname, task.taskname) && Objects.equals(description, task.description) && Objects.equals(due_date, task.due_date) && taskstatus == task.taskstatus && priority == task.priority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated) && Objects.equals(tasklist, task.tasklist);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskname, description, due_date, taskstatus, priority, created, updated, taskList);
+        return Objects.hash(id, taskname, description, due_date, taskstatus, priority, created, updated, tasklist);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class Task {
                 ", priority=" + priority +
                 ", created=" + created +
                 ", updated=" + updated +
-                ", taskList=" + taskList +
+                ", tasklist=" + tasklist +
                 '}';
     }
 

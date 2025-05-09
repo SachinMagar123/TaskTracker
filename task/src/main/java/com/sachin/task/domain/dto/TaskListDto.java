@@ -8,8 +8,8 @@ import java.util.UUID;
 public record TaskListDto(
 
         UUID id,
-        String titile,
-        String Description,
+        String title,
+        String description,
         List<TaskDto> tasks,
 
         //count for numbers of tasks in tasklist
@@ -17,6 +17,6 @@ public record TaskListDto(
 
         //represents percentage of completion by number 0 to 1
         Double progress
-        
+
 ) {
 }
