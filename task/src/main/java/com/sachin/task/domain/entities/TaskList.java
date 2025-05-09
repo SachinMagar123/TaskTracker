@@ -3,6 +3,7 @@ package com.sachin.task.domain.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
@@ -28,15 +29,19 @@ public class TaskList {
     @Column(name="updated" , nullable = false)
     private LocalDateTime updated ;
 
+    @OneToMany(mappedBy = "tasklist" , cascade = {CascadeType.REMOVE , CascadeType.PERSIST})
+    private List<Task> tasks;
+
     public TaskList() {
     }
 
-    public TaskList(UUID id, String title, String description, LocalDateTime created, LocalDateTime updated) {
+    public TaskList(UUID id, String title, String description, LocalDateTime created, LocalDateTime updated, List<Task> tasks) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.created = created;
         this.updated = updated;
+        this.tasks = tasks;
     }
 
     public UUID getId() {
@@ -79,17 +84,12 @@ public class TaskList {
         this.updated = updated;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskList taskList = (TaskList) o;
-        return Objects.equals(id, taskList.id) && Objects.equals(title, taskList.title) && Objects.equals(description, taskList.description) && Objects.equals(created, taskList.created) && Objects.equals(updated, taskList.updated);
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, description, created, updated);
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
@@ -100,6 +100,21 @@ public class TaskList {
                 ", description='" + description + '\'' +
                 ", created=" + created +
                 ", updated=" + updated +
+                ", tasks=" + tasks +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskList taskList = (TaskList) o;
+        return Objects.equals(id, taskList.id) && Objects.equals(title, taskList.title) && Objects.equals(description, taskList.description) && Objects.equals(created, taskList.created) && Objects.equals(updated, taskList.updated) && Objects.equals(tasks, taskList.tasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, created, updated, tasks);
+    }
+
 }

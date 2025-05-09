@@ -36,18 +36,31 @@ public class Task {
     @Column(name="updated", nullable = false)
     private LocalDateTime updated ;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tasklist_id")
+    private TaskList taskList ;
+
     public Task() {
     }
 
-    public Task(UUID id, String taskname, String description, LocalDateTime due_date, TaskStatus taskstatus, TaskPriority priority, LocalDateTime updated, LocalDateTime created) {
+    public Task(UUID id, String taskname, String description, LocalDateTime due_date, TaskStatus taskstatus, TaskPriority priority, LocalDateTime created, LocalDateTime updated, TaskList taskList) {
         this.id = id;
         this.taskname = taskname;
         this.description = description;
         this.due_date = due_date;
         this.taskstatus = taskstatus;
         this.priority = priority;
-        this.updated = updated;
         this.created = created;
+        this.updated = updated;
+        this.taskList = taskList;
+    }
+
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
     }
 
     public UUID getId() {
@@ -115,6 +128,19 @@ public class Task {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(id, task.id) && Objects.equals(taskname, task.taskname) && Objects.equals(description, task.description) && Objects.equals(due_date, task.due_date) && taskstatus == task.taskstatus && priority == task.priority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated) && Objects.equals(taskList, task.taskList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, taskname, description, due_date, taskstatus, priority, created, updated, taskList);
+    }
+
+    @Override
     public String toString() {
         return "Task{" +
                 "id=" + id +
@@ -125,19 +151,8 @@ public class Task {
                 ", priority=" + priority +
                 ", created=" + created +
                 ", updated=" + updated +
+                ", taskList=" + taskList +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(taskname, task.taskname) && Objects.equals(description, task.description) && Objects.equals(due_date, task.due_date) && taskstatus == task.taskstatus && priority == task.priority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, taskname, description, due_date, taskstatus, priority, created, updated);
-    }
 }
