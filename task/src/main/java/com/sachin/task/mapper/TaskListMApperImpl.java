@@ -43,9 +43,11 @@ public class TaskListMApperImpl implements TaskListMapper{
                                 .map(taskMapper::toDto)
                                 .toList())
                         .orElse(null),
+
                 Optional.ofNullable(tasks)
                         .map(List::size)
                         .orElse(0),
+
                 calculateTaskListProgress(tasks)
         );
     }
