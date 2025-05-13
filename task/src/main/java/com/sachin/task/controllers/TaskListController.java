@@ -3,12 +3,11 @@ package com.sachin.task.controllers;
 
 import com.sachin.task.domain.dto.TaskDto;
 import com.sachin.task.domain.dto.TaskListDto;
+import com.sachin.task.domain.entities.TaskList;
 import com.sachin.task.mapper.TaskListMApperImpl;
 import com.sachin.task.mapper.TaskListMapper;
 import com.sachin.task.services.TaskListService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +30,11 @@ public class TaskListController {
                 .stream()
                 .map(taskListMapper::toDto)
                 .toList();
+    }
+
+    @PostMapping
+    public TaskListDto createTaskList(@RequestBody TaskListDto taskListDto){
+       TaskList createdTasklist = taskListService.createTasklist(taskListMapper.fromDto(taskListDto));
+    return taskListMapper.toDto(createdTasklist) ;
     }
 }
