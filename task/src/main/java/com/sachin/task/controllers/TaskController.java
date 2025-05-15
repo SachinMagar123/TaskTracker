@@ -9,6 +9,7 @@ import com.sachin.task.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -32,5 +33,10 @@ public class TaskController {
     public TaskDto createTask(@PathVariable("task_list_id")UUID tasklistId , @RequestBody TaskDto taskDto){
         Task createdTask = taskService.createTask(tasklistId , taskMapper.fromDto(taskDto));
         return taskMapper.toDto(createdTask) ;
+    }
+
+    @GetMapping(path = "/{task_id}")
+    public Optional<TaskDto> getTask(@PathVariable("task_list_id") UUID tasklistId , @PathVariable("task_id") UUID taskId) {
+        return taskService.getTask(tasklistId, taskId).map(taskMapper::toDto);
     }
 }
