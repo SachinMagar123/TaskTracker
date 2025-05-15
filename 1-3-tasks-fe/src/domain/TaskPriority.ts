@@ -1,7 +1,7 @@
 export enum TaskPriority {
-  HIGH = "HIGH",
-  MEDIUM = "MEDIUM",
-  LOW = "LOW",
+  HIGH = "high",
+  MEDIUM = "medium",
+  LOW = "low",
 }
 
 // Type guard for TaskPriority
