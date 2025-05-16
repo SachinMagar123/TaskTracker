@@ -6,6 +6,7 @@ import com.sachin.task.domain.dto.TaskListDto;
 import com.sachin.task.domain.entities.Task;
 import com.sachin.task.mapper.TaskMapper;
 import com.sachin.task.services.TaskService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,5 +39,12 @@ public class TaskController {
     @GetMapping(path = "/{task_id}")
     public Optional<TaskDto> getTask(@PathVariable("task_list_id") UUID tasklistId , @PathVariable("task_id") UUID taskId) {
         return taskService.getTask(tasklistId, taskId).map(taskMapper::toDto);
+    }
+
+    @PutMapping(path = "/{task_id}")
+    public TaskDto updateTask(@PathVariable("task_id")UUID taskId , @PathVariable("task_list_id") UUID taskListId, @RequestBody TaskDto taskDto) {
+       Task updatedTask = taskService.updateTask(taskListId, taskId , taskMapper.fromDto(taskDto));
+
+        return taskMapper.toDto(updatedTask) ;
     }
 }
