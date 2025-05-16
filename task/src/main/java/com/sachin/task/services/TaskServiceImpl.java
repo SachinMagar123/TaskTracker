@@ -6,6 +6,7 @@ import com.sachin.task.domain.entities.TaskPriority;
 import com.sachin.task.domain.entities.TaskStatus;
 import com.sachin.task.repositories.TaskListRepository;
 import com.sachin.task.repositories.TaskRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -85,5 +86,11 @@ public class TaskServiceImpl implements TaskService{
         existingTask.setUpdated(LocalDateTime.now());
 
         return taskRepository.save(existingTask);
+    }
+
+    @Transactional
+    @Override
+    public void deleteTask(UUID taskListId, UUID taskId) {
+        taskRepository.deleteByTaskList_IdAndId(taskListId , taskId);
     }
 }
